@@ -1,6 +1,5 @@
 <?php
-
-session_start();
+require_once 'php/config.php';
 
 if (!isset($_SESSION['access']) || !$_SESSION['access']) {
 	header("Location: validate.php");

@@ -92,6 +92,13 @@ include 'php/header.php';
 						</div>
 						
 					</div>
+					<!-- <div class="row"> -->
+						<hr>
+						<div class="form-group">
+							<label for="aasequence">Amino Acid Sequence</label>
+							<textarea name="aasequence" id="aasequence" rows="6" class="form-control"></textarea>
+						</div>
+					<!-- </div> -->
 					  <button type="submit" class="btn btn-primary">Submit</button>
 
 				</div>
@@ -124,7 +131,7 @@ include 'php/header.php';
 			  			<label for="description">Description (optional)</label>
 			  			<textarea name="description" id="description" rows="3" class="form-control"></textarea>
 			  		</div>
-			  							  <button type="submit" class="btn btn-primary">Submit</button>
+			  		<button type="submit" class="btn btn-primary">Submit</button>
 
 
 			  	</div>
