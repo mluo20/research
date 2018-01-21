@@ -14,6 +14,9 @@ include 'php/header.php';
 			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#domains" role="tab" aria-controls="domains" aria-selected="false">Domain</a>
 			  </li>
 			  <li class="nav-item">
+			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#aminoacids" role="tab" aria-controls="aminoacids" aria-selected="false">Amino Acids</a>
+			  </li>
+			  <li class="nav-item">
 			    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#organisms" role="tab" aria-controls="organisms" aria-selected="false">Organisms</a>
 			  </li>
 			  <li class="nav-item">
@@ -25,6 +28,8 @@ include 'php/header.php';
 
 			  </div>
 			  <div class="tab-pane fade show active" id="domains" role="tabpanel" aria-labelledby="domains-tab">
+			  </div>
+			  <div class="tab-pane fade show active" id="aminoacids" role="tabpanel" aria-labelledby="aminoacids-tab">
 			  </div>
 			  <div class="tab-pane fade" id="organisms" role="tabpanel" aria-labelledby="organisms-tab">...</div>
 			  <div class="tab-pane fade" id="kinases" role="tabpanel" aria-labelledby="kinases-tab">...</div>

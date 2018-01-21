@@ -22,6 +22,7 @@
 		    	}
 		    	else if (!$(this).is(":checked")) {
 		    		$(":input").attr("required", "true");
+		    		$(this).removeAttr("required");
 		    	}
 		    });
 		});

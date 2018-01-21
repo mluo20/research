@@ -49,7 +49,7 @@ function insert($table, $tablevals, $values) {
 		$questionmarks .= "?, ";
 	}
 
-	foreach ($values as $key => $value) {
+	foreach ($values as $value) {
 		if (gettype($value) == "string") $typestring .= "s";
 		else if (gettype($value) == "integer") $typestring .= "i";
 		else if (gettype($value) == "double") $typestring .= "d";
