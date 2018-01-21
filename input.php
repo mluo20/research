@@ -20,6 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		unset($_POST['inputkinase']);
 		if (insertKinase($_POST)) header("Location: ?message=success");
 	}
+	else if (isset($inputdomain)) {
+		unset($_POST['inputdomain']);
+		if (insertDomain($_POST)) {header("Location: ?message=success");}
+	}
 }
 
 if (isset($_GET['message'])) {
@@ -31,6 +35,9 @@ if (isset($_GET['message'])) {
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 			  <li class="nav-item">
 			    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Query Result</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#domain" role="tab" aria-controls="domain" aria-selected="false">Domain</a>
 			  </li>
 			  <li class="nav-item">
 			    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Organism</a>
@@ -59,9 +66,9 @@ if (isset($_GET['message'])) {
 						    <label for="kinase">Kinase</label>
 						    <select class="form-control" name="kinase" id="kinase">
 						      <?php
-						      	for ($i = 0; $i <= count($kinases); $i++) { 
+						      	for ($i = 0; $i < count($kinases); $i++) { 
 						      		echo "<option value=\"". $kinases[$i]->id; 
-						      		if ($datakid == $kinase[$i]->id) echo " selected";
+						      		if ($datakid == $kinases[$i]->id) echo " selected";
 						      		echo "\">" . $kinases[$i]->name . "</option>";
 						      	}
 						      ?>
@@ -83,9 +90,7 @@ if (isset($_GET['message'])) {
     					<div class="col">
     						<?php
 					  			$organisms = array(Organism::getList("WHERE kingdom = 'plants'"), Organism::getList("WHERE kingdom = 'fungi'"), Organism::getList("WHERE kingdom = 'protists'"), Organism::getList("WHERE kingdom = 'bacteria'"), Organism::getList("WHERE kingdom = 'animals'"));
-					  			$onelistorganisms = Organism::getList();
-					  			$oorganism = $onelistorganisms[count($onelistorganisms) - 1];
-					  			$data = Data::getList();
+					  			$data = Data::getBlastX();
 					  			if (count($data) > 0) $dataoid = $data[count($data) - 1]->oid;
 					  			else $dataoid = -1;
 					  		?>
@@ -97,9 +102,9 @@ if (isset($_GET['message'])) {
 						      		if (!empty($organisms[$j])) {
 							      		echo "<optgroup label=\"" . $organisms[$j][0]->kingdom . "\">";
 								      	for ($i = 0; $i < count($organisms[$j]); $i++) { 
-								      		echo "<option value=\"". $organisms[$j][$i]->id; 
-								      		if ($dataoid == $organisms[$j][$i]->id) echo " selected";
-								      		echo "\">" . $organisms[$j][$i]->name . "</option>";
+								      		echo "<option value=\"". $organisms[$j][$i]->id . "\""; 
+								      		if ($dataoid == $organisms[$j][$i]->id) {echo " selected";}
+								      		echo ">" . $organisms[$j][$i]->name . "</option>";
 								      	}
 								      	echo "</optgroup>";
 								    }
@@ -118,7 +123,7 @@ if (isset($_GET['message'])) {
 					 		<div class="col-md">
 							  <div class="form-group">
 								    <label for="evalue">E. value</label>
-								    <input type="number" name="evalue" id="evalue" class="form-control" required>
+								    <input type="number" step="any" name="evalue" id="evalue" class="form-control" required>
 							  </div>
 							</div>
 						  <div class="col-md">
@@ -154,7 +159,7 @@ if (isset($_GET['message'])) {
 								</div>
 							</div>
 						</div>
-												</fieldset>
+						</fieldset>
 
 
 					</div>
@@ -165,7 +170,7 @@ if (isset($_GET['message'])) {
 					 		<div class="col-md">
 							  <div class="form-group">
 								    <label for="evaluex">E. value</label>
-								    <input type="number" name="evaluex" id="evaluex" class="form-control" required>
+								    <input type="number" step="any" name="evaluex" id="evaluex" class="form-control" required>
 							  </div>
 							</div>
 						  <div class="col-md">
@@ -205,42 +210,15 @@ if (isset($_GET['message'])) {
 					</div>
 					</div>
 					<hr>
-					<div class="row">
-						<div class="col-md">
-						<div class="row">
-							<div class="col-md">
-								<div class="form-group">
-									<label for="dname">Domain Name</label>
-									<input type="text" name="dname" id="dname" class="form-control" required>
-								</div>
-							</div>
-							<div class="col-md">
-								<div class="form-group">
-									<label for="dlocation">Domain Location:</label>
-									<div class="row">
-										<div class="col">
-											<input type="number" name="dlocation1" id="dlocation" class="form-control" required>
-										</div>
-										-
-										<div class="col">
-											<input type="number" name="dlocation2" class="form-control" required>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="ddescription">Domain Description</label>
-							<textarea name="ddescription" id="ddescription" rows="6" class="form-control"></textarea>
-						</div>
-						</div>
-						<div class="col-md">
+					<!-- <div class="row"> -->
+						
+						<!-- <div class="col-md"> -->
 						<div class="form-group">
 							<label for="aasequence">Amino Acid Sequence</label>
 							<textarea name="aasequence" id="aasequence" rows="6" class="form-control"></textarea>
 						</div>
-						</div>
-					</div>
+						<!-- </div> -->
+					<!-- </div> -->
 						<div class="form-check">
 						  <input class="form-check-input" type="checkbox" name="nomatch" value="1" id="nomatch">
 						  <label class="form-check-label" for="nomatch">
@@ -311,6 +289,55 @@ if (isset($_GET['message'])) {
 			  		</div>
 			  			<button type="submit" class="btn btn-primary" name="inputkinase">Submit</button>
 
+
+			  	</div>
+			  	</div>
+
+			  	</form>
+			  </div>
+			   <div class="tab-pane fade" id="domain" role="tabpanel" aria-labelledby="domain-tab">
+			  	<form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="tabforms">
+			  	<div class="row justify-content-md-center">
+			  	<div class="col-md-6">
+			  			<div class="form-group">
+						    <label for="kinase">Kinase</label>
+						    <select class="form-control" name="kinase" id="kinase">
+						      <?php
+						      	for ($i = 0; $i < count($kinases); $i++) { 
+						      		echo "<option value=\"". $kinases[$i]->id; 
+						      		echo "\">" . $kinases[$i]->name . "</option>";
+						      	}
+						      ?>
+						    </select>
+					  		</div>
+
+						<div class="row">
+							<div class="col-md">
+								<div class="form-group">
+									<label for="dname">Domain Name</label>
+									<input type="text" name="dname" id="dname" class="form-control" required>
+								</div>
+							</div>
+							<div class="col-md">
+								<div class="form-group">
+									<label for="dlocation">Domain Location:</label>
+									<div class="row">
+										<div class="col">
+											<input type="number" name="dlocation1" id="dlocation" class="form-control" required>
+										</div>
+										-
+										<div class="col">
+											<input type="number" name="dlocation2" class="form-control" required>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="ddescription">Domain Description</label>
+							<textarea name="ddescription" id="ddescription" rows="6" class="form-control"></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary" name="inputdomain">Submit</button>
 
 			  	</div>
 			  	</div>

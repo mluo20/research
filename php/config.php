@@ -9,7 +9,7 @@ define("PASSWORD", "");
 define("DATABASE", "research");
 
 const DATA = array("id", "kid", "oid", "evalue", "percentcoverage", "proteinname", "location1", "location2");
-const DOMAINS = array("id", "did", "name", "location1", "location2", "description");
+const DOMAINS = array("id", "kid", "name", "location1", "location2", "description");
 const KINASES = array("id", "name", "description", "sequence");
 const ORGANISMS = array("id", "kingdom", "name", "description");
 const AMINO_ACIDS = array("id", "did", "sequence");

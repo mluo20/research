@@ -127,7 +127,7 @@ class Data {
 class Domain {
 
 	public $id;
-	public $did;
+	public $kid;
 	public $name;
 	public $location1;
 	public $location2;
@@ -135,7 +135,7 @@ class Domain {
 	
 	function __construct($vals = array()) {
 		$this->id = $vals['id'];
-		$this->did = $vals['did'];
+		$this->kid = $vals['kid'];
 		$this->name = $vals['name'];
 		$this->location1 = $vals['dlocation1'];
 		$this->location2 = $vals['dlocation2'];

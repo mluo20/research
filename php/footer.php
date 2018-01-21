@@ -16,6 +16,14 @@
 		$('form').areYouSure();
 		$(document).ready(function(){
 		    $('#example').DataTable();
+		    $('#nomatch').change(function(){
+		    	if ($(this).is(":checked")) {
+		    		$(":input").removeAttr("required");
+		    	}
+		    	else if (!$(this).is(":checked")) {
+		    		$(":input").attr("required", "true");
+		    	}
+		    });
 		});
 	</script>
 
