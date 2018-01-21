@@ -65,7 +65,77 @@ function insertDomain($domaindata) {
 	return insert("domains", DOMAINS, $domaindata);
 }
 
+function returnAminoAcids() {
+	$aminoacidtable = "";
+	$aminoacids = AminoAcid::getList();
+	$aminoacidtable .= "<table class=\"table\" cellspacing=\"0\" width=\"100%\"><thead><tr><th>Organism</th><th>Kinase</th><th>Sequence</th></thead><tbody>";
+	for ($i=0; $i < count($aminoacids); $i++) { 
+		$aminoacidtable .= "<tr>";
+		$datarow = Data::getRowData($aminoacids[$i]->did, "blastx");
+		$organism = Organism::getOrganism($datarow->oid);
+		$kinase = Kinase::getKinase($datarow->kid);
+		$aminoacidtable .= "<td><i>" . $organism->name . "</i></td>";
+		$aminoacidtable .= "<td>" . $kinase->name . "</td>";
+		if ($aminoacids[$i]->sequence != NULL)
+			$aminoacidtable .= "<td class=\"shorten\">" . nl2br($aminoacids[$i]->sequence) . "</td>";
+		else $aminoacidtable .= "<td>N/A</td>";
+		$aminoacidtable .= "</tr>";
+	}
+	$aminoacidtable .= "</tbody></table>";
+	return $aminoacidtable;
+}
 
+function returnDomains() {
+	$domaintable = "";
+	$domains = Domain::getList();
+	$domaintable .= "<table class=\"table\" cellspacing=\"0\" width=\"100%\"><thead><tr><th>Kinase</th><th>Name</th><th>Location</th><th>Description</th></thead><tbody>";
+	for ($i=0; $i < count($domains); $i++) { 
+		$domaintable .= "<tr>";
+		$kinase = Kinase::getKinase($domains[$i]->kid);
+		$domaintable .= "<td>" . $kinase->name . "</td>";
+		$domaintable .= "<td>" . $domains[$i]->name . "</td>";
+		$domaintable .= "<td>" . $domains[$i]->location1 . " - " . $domains[$i]->location2 . "</td>";
+		$domaintable .= "<td class=\"shorten\">" . nl2br($domains[$i]->description) . "</td>";
+		$domaintable .= "</tr>";
+	}
+	$domaintable .= "</tbody></table>";
+	return $domaintable;
+}
+
+function returnOrganisms() {
+	$organismtable = "";
+	$organisms = Organism::getList();
+	$organismtable .= "<table class=\"table\" cellspacing=\"0\" width=\"100%\"><thead><tr><th>Kingdom</th><th>Name</th><th>Description</th></thead><tbody>";
+	for ($i=0; $i < count($organisms); $i++) { 
+		$organismtable .= "<tr>";
+		$organismtable .= "<td>" . $organisms[$i]->kingdom . "</td>";
+		$organismtable .= "<td><i>" . $organisms[$i]->name . "</i></td>";
+		$organismtable .= "<td>" . nl2br($organisms[$i]->description) . "</td>";
+		$organismtable .= "</tr>";
+	}
+	$organismtable .= "</tbody></table>";
+	return $organismtable;
+}
+
+function returnKinases() {
+	$kinasetable = "";
+	$kinases = Kinase::getList();
+	$kinasetable .= "<table class=\"table\" cellspacing=\"0\" width=\"100%\"><thead><tr><th>Kingdom</th><th>Name</th><th>Description</th></thead><tbody>";
+	for ($i=0; $i < count($kinases); $i++) { 
+		$kinasetable .= "<tr>";
+		$kinasetable .= "<td>" . $kinases[$i]->name . "</td>";
+		if ($kinases[$i]->description == NULL) $kinasetable .= "<td>N/A</td>";
+		else $kinasetable .= "<td>" . $kinases[$i]->description . "</td>";
+		$kinasetable .= "<td class=\"shorten\">" . nl2br($kinases[$i]->sequence) . "</td>";
+		$kinasetable .= "</tr>";
+	}
+	$kinasetable .= "</tbody></table>";
+	return $kinasetable;
+}
+
+function returnData($options = "") {
+	
+}
 
 /*UTILITIES*/
 

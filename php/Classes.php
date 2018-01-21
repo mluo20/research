@@ -25,8 +25,8 @@ class Kinase {
 	public static function getKinase($id) {
 		$vals = select("kinases", KINASES, "WHERE id = $id");
 		if (isset($vals[0])) {
-			$user = new Kinase($vals[0]);
-			return $vals;
+			$kinase = new Kinase($vals[0]);
+			return $kinase;
 		}
 		else return false;
 	}
@@ -58,8 +58,8 @@ class Organism {
 	public static function getOrganism($id) {
 		$vals = select("organisms", ORGANISMS, "WHERE id = $id");
 		if (isset($vals[0])) {
-			$user = new Organism($vals[0]);
-			return $vals;
+			$organism = new Organism($vals[0]);
+			return $organism;
 		}
 		else return false;
 	}
@@ -116,8 +116,8 @@ class Data {
 	public static function getRowData($id, $table) {
 		$vals = select($table, DATA, "WHERE id = $id");
 		if (isset($vals[0])) {
-			$user = new Data($vals[0]);
-			return $vals;
+			$datarow = new Data($vals[0]);
+			return $datarow;
 		}
 		else return false;
 	}
@@ -137,8 +137,8 @@ class Domain {
 		$this->id = $vals['id'];
 		$this->kid = $vals['kid'];
 		$this->name = $vals['name'];
-		$this->location1 = $vals['dlocation1'];
-		$this->location2 = $vals['dlocation2'];
+		$this->location1 = $vals['location1'];
+		$this->location2 = $vals['location2'];
 		$this->description = $vals['description'];
 	}
 
@@ -153,8 +153,39 @@ class Domain {
 	public static function getDomain($id) {
 		$vals = select("domains", DOMAINS, "WHERE id = $id");
 		if (isset($vals[0])) {
-			$user = new Domain($vals[0]);
-			return $vals;
+			$domain = new Domain($vals[0]);
+			return $domain;
+		}
+		else return false;
+	}
+
+}
+
+class AminoAcid {
+
+	public $id;
+	public $did;
+	public $sequence;
+
+	function __construct($vals = array()) {
+		$this->id = $vals['id'];
+		$this->did = $vals['did'];
+		$this->sequence = $vals['sequence'];
+	}
+
+	public static function getList($options = "") {
+		$array = select("amino_acids", AMINO_ACIDS, $options);
+		for ($i = 0; $i < count($array); $i++) {
+			$array[$i] = new AminoAcid($array[$i]);
+		}
+		return $array;
+	}
+
+	public static function getAminoAcid($id) {
+		$vals = select("amino_acids", AMINO_ACIDS, "WHERE id = $id");
+		if (isset($vals[0])) {
+			$aminoacid = new AminoAcid($vals[0]);
+			return $aminoacid;
 		}
 		else return false;
 	}
