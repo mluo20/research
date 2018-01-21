@@ -40,3 +40,5 @@ if (!isset($_SESSION['access']) || !$_SESSION['access']) {
 		    </div>
 		  </div>
 		</nav>
+
+		<div id="main">

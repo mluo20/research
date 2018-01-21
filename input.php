@@ -3,9 +3,27 @@
 $pagetitle = "Input data";
 
 include 'php/header.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	extract($_POST);
+	if (isset($inputdata)) {
+		
+	}
+	else if (isset($inputorganism)) {
+		unset($_POST['inputorganism']);
+		if (insertOrganism($_POST)) header("Location: ?message=success");
+	}
+	else if (isset($inputkinase)) {
+		unset($_POST['inputkinase']);
+		if (insertKinase($_POST)) header("Location: ?message=success");
+	}
+}
+
+if (isset($_GET['message'])) {
+	echo "<div class=\"alert alert-success\" role=\"alert\">Successfully inserted data</div>";
+}
 ?>
 		
-		<div id="main" >
 			<h1>Input Data</h1>
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 			  <li class="nav-item">
@@ -23,23 +41,11 @@ include 'php/header.php';
 			  	
 			  	<!--BEGIN FORM HERE-->
 
-			  	<form method="POST" action="" class="tabforms">
+			  	<form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="tabforms">
 			  	<div class="row justify-content-md-center">
     			<div class="col-md-6">
     				<div class="row">
     					<div class="col">
-					  <div class="form-group">
-					    <label for="organism">Organism</label>
-					    <select class="form-control" name="organism" id="organism">
-					      <option>1</option>
-					      <option>2</option>
-					      <option>3</option>
-					      <option>4</option>
-					      <option>5</option>
-					    </select>
-					  </div>
-						</div>
-						<div class="col">
 							<div class="form-group">
 						    <label for="kinase">Kinase</label>
 						    <select class="form-control" name="kinase" id="kinase">
@@ -49,7 +55,31 @@ include 'php/header.php';
 						      <option>4</option>
 						      <option>5</option>
 						    </select>
-					  </div>
+					  		</div>
+						</div>
+						<div class="col">
+						  <div class="form-group">
+						    <label for="kingdom">Kingdom</label>
+						    <select class="form-control" name="kingdom" id="kingdom">
+						      <option>1</option>
+						      <option>2</option>
+						      <option>3</option>
+						      <option>4</option>
+						      <option>5</option>
+						    </select>
+						  </div>
+						</div>
+    					<div class="col">
+						  <div class="form-group">
+						    <label for="organism">Organism</label>
+						    <select class="form-control" name="organism" id="organism">
+						      <option>1</option>
+						      <option>2</option>
+						      <option>3</option>
+						      <option>4</option>
+						      <option>5</option>
+						    </select>
+						  </div>
 						</div>
 					</div>
 				 	<div class="row">
@@ -92,6 +122,33 @@ include 'php/header.php';
 						</div>
 						
 					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-7">
+							<div class="form-group">
+								<label for="dname">Domain Name</label>
+								<input type="text" name="dname" id="dname" class="form-control" required>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="form-group">
+								<label for="dlocation">Domain Location:</label>
+								<div class="row">
+									<div class="col">
+										<input type="number" name="dlocation1" id="dlocation" class="form-control" required>
+									</div>
+									-
+									<div class="col">
+										<input type="number" name="dlocation2" class="form-control" required>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+							<label for="ddescription">Domain Description</label>
+							<textarea name="ddescription" id="ddescription" rows="6" class="form-control"></textarea>
+						</div>
 					<!-- <div class="row"> -->
 						<hr>
 						<div class="form-group">
@@ -99,7 +156,7 @@ include 'php/header.php';
 							<textarea name="aasequence" id="aasequence" rows="6" class="form-control"></textarea>
 						</div>
 					<!-- </div> -->
-					  <button type="submit" class="btn btn-primary">Submit</button>
+					  <button type="submit" class="btn btn-primary" name="inputdata">Submit</button>
 
 				</div>
 				</div>
@@ -107,7 +164,7 @@ include 'php/header.php';
 
 			  </div>
 			  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-			  	<form method="POST" action="" class="tabforms">
+			  	<form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="tabforms">
 			  	<div class="row justify-content-md-center">
 			  	<div class="col-md-6">
 
@@ -131,7 +188,7 @@ include 'php/header.php';
 			  			<label for="description">Description (optional)</label>
 			  			<textarea name="description" id="description" rows="3" class="form-control"></textarea>
 			  		</div>
-			  		<button type="submit" class="btn btn-primary">Submit</button>
+			  		<button type="submit" class="btn btn-primary" name="inputorganism">Submit</button>
 
 
 			  	</div>
@@ -140,7 +197,7 @@ include 'php/header.php';
 			  	</form>
 			  </div>
 			  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-			  	<form method="POST" action="" class="tabforms">
+			  	<form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="tabforms">
 			  	<div class="row justify-content-md-center">
 			  	<div class="col-md-6">
 
@@ -150,10 +207,15 @@ include 'php/header.php';
 			  		</div>
 
 			  		<div class="form-group">
-			  			<label for="description">Sequence</label>
-			  			<textarea name="description" id="description" rows="6" class="form-control"></textarea>
+			  			<label for="kdescription">Description (optional)</label>
+			  			<input type="text" name="kdescription" id="kdescription" class="form-control">
 			  		</div>
-			  			<button type="submit" class="btn btn-primary">Submit</button>
+
+			  		<div class="form-group">
+			  			<label for="sequence">Arabidopsis sequence</label>
+			  			<textarea name="sequence" id="sequence" rows="6" class="form-control"></textarea>
+			  		</div>
+			  			<button type="submit" class="btn btn-primary" name="inputkinase">Submit</button>
 
 
 			  	</div>
@@ -162,10 +224,6 @@ include 'php/header.php';
 			  	</form>
 			  </div>
 			</div>
-
-
-		</div>
-
 <?php
 include 'php/footer.php';
 ?>

@@ -5,7 +5,6 @@ $pagetitle = "Data";
 include 'php/header.php';
 ?>
 		
-		<div id="main">
 			<h1>Display Data</h1>
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 			  <li class="nav-item">
@@ -27,7 +26,6 @@ include 'php/header.php';
 			  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
 			  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
 			</div>
-		</div>
 
 <?php
 include 'php/footer.php';

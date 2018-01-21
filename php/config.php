@@ -8,7 +8,10 @@ define("USERNAME", "root");
 define("PASSWORD", "");
 define("DATABASE", "research");
 
-const USERVALS = array("uid", "firstname", "lastname", "email", "username", "password", "team", "acl");
+const DATA = array("id", "oid", "kid", "evalue", "percentcoverage", "proteinname", "location1", "location2", "aminoacidseq");
+const DOMAINS = array("id", "did", "name", "location1", "location2", "description");
+const KINASES = array("id", "name", "description", "sequence");
+const ORGANISMS = array("id", "kingdom", "name", "description");
 
 /*FUNCTIONS*/
 
@@ -28,6 +31,18 @@ function insert($table, $tablevals, $values) {
 	$typestring = "";
 	$questionmarks = "";
 
+	unset($tablevals[0]);
+	$unsetvals = $tablevals;
+	$newvals = array();
+	for ($i = 1; $i <= count($unsetvals); $i++) {
+		$newvals[] = $unsetvals[$i];
+	}
+
+	$tablevals = $newvals;
+
+	// $tablevals = $newvals;
+	// echo count($tablevals);
+
 	for ($i = 0; $i < count($tablevals); $i++) { 
 		$tablevalsstring .= $tablevals[$i] . ", ";
 		$questionmarks .= "?, ";
@@ -38,7 +53,10 @@ function insert($table, $tablevals, $values) {
 		else if (gettype($value) == "integer") $typestring .= "i";
 		else if (gettype($value) == "double") $typestring .= "d";
 		else $typestring .= "b";
+		$value = preg_replace("/\r\n|\r|\n/",'<br>',$value);
 	}
+
+	// echo count($values);
 
 	$tablevalsstring = substr($tablevalsstring, 0, strlen($tablevalsstring) - 2);
 	$questionmarks = substr($questionmarks, 0, strlen($questionmarks) - 2);
@@ -50,7 +68,7 @@ function insert($table, $tablevals, $values) {
 	$conn = connect();
 	$sql = "INSERT INTO $table ($tablevalsstring) VALUES ($questionmarks)";
 	$stmt = $conn->prepare($sql);
-	if (!$stmt) echo "Error, ask Miranda or Larry for help: <br> $sql <br>" . $conn->error;
+	if (!$stmt) {echo "Error, ask Miranda or Larry for help: <br> $sql <br>" . $conn->error; return false;}
 
 	call_user_func_array(array($stmt, "bind_param"), array_merge(array($type), $params));
 	$stmt->execute();
@@ -60,7 +78,7 @@ function insert($table, $tablevals, $values) {
 
 }
 
-function select($table, $tablevals, $options) {
+function select($table, $tablevals, $options = "") {
 
 	$tablevalsstring = "";
 
@@ -136,4 +154,6 @@ function delete($table, $location) {
 }
 
 /*INCLUDES*/
-
+require_once 'php/functions.php';
+require_once 'php/Classes.php';
+?>
