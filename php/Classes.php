@@ -90,7 +90,7 @@ class Data {
 	}
 
 	public static function getList($options = "") {
-		$array = select("blastn", DATA, " UNION ALL SELECT * FROM blastx ORDER BY oid" . $options);
+		$array = select("blastn", DATA, " UNION ALL SELECT * FROM blastx ORDER BY kid ASC" . $options);
 		for ($i = 0; $i < count($array); $i++) {
 			$array[$i] = new Data($array[$i]);
 		}

@@ -30,7 +30,10 @@ if (isset($_GET['getdata']) && isset($_GET['id'])) {
 			</ul>
 			<div class="tab-content tabforms" id="myTabContent">
 			  <div class="tab-pane fade" id="data" role="tabpanel" aria-labelledby="data-tab">
-			  		
+			  		 
+			  	<?php
+			  		echo returnData();
+			  	?>
 			  </div>
 			  <div class="tab-pane fade" id="domains" role="tabpanel" aria-labelledby="domains-tab">
 			  	<?php

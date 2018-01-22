@@ -134,7 +134,23 @@ function returnKinases() {
 }
 
 function returnData($options = "") {
-	
+	$datatable = "";
+	$data = Data::getBlastN();
+	$datatable .= "<table class=\"table\" cellspacing=\"0\" width=\"100%\"><thead><tr><th>Kinase</th><th>Organism</th><th>E-value</th><th>Percent Coverage</th><th>Protein Name</th><th>Location</th></thead><tbody>";
+	for ($i=0; $i < count($data); $i++) { 
+		$datatable .= "<tr>";
+		$organism = Organism::getOrganism($data[$i]->oid);
+		$kinase = Kinase::getKinase($data[$i]->kid);
+		$datatable .= "<td>" . $kinase->name . "</td>";
+		$datatable .= "<td><i>" . $organism->name . "</i></td>";
+		$datatable .= "<td>" . $data[$i]->evalue . "</td>";
+		$datatable .= "<td>" . $data[$i]->percentcoverage . "%</td>";
+		$datatable .= "<td>" . $data[$i]->proteinname . "</td>";
+		$datatable .= "<td>" . $data[$i]->location1  . " - " . $data[$i]->location2 . "</td>";
+		$datatable .= "</tr>";
+	}
+	$datatable .= "</tbody></table>";
+	return $datatable;
 }
 
 /*UTILITIES*/
