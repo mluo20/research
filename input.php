@@ -58,7 +58,7 @@ if (isset($_GET['message'])) {
     					<div class="col">
     						<?php
 					  			$kinases = Kinase::getList();
-					  			$data = Data::getList();
+					  			$data = Data::getBlastX();
 					  			if (count($data) > 0) $datakid = $data[count($data) - 1]->kid;
 					  			else $datakid = -1;
 					  		?>
@@ -67,9 +67,9 @@ if (isset($_GET['message'])) {
 						    <select class="form-control" name="kinase" id="kinase">
 						      <?php
 						      	for ($i = 0; $i < count($kinases); $i++) { 
-						      		echo "<option value=\"". $kinases[$i]->id; 
+						      		echo "<option value=\"". $kinases[$i]->id . "\""; 
 						      		if ($datakid == $kinases[$i]->id) echo " selected";
-						      		echo "\">" . $kinases[$i]->name . "</option>";
+						      		echo ">" . $kinases[$i]->name . "</option>";
 						      	}
 						      ?>
 						    </select>
