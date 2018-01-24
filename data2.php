@@ -9,22 +9,23 @@ if (isset($_GET['getdata']) && isset($_GET['id'])) {
 }
 
 ?>
+		
 			<h1>Display Data</h1>
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 			  <li class="nav-item">
-			    <a class="nav-link active" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true">Data</a>
+			    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true">Data</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" id="domains-tab" data-toggle="tab" href="#domains" role="tab" aria-controls="domains" aria-selected="false">Domain</a>
+			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#domains" role="tab" aria-controls="domains" aria-selected="false">Domain</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" id="aminoacids-tab" data-toggle="tab" href="#aminoacids" role="tab" aria-controls="aminoacids" aria-selected="false">Amino Acids</a>
+			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#aminoacids" role="tab" aria-controls="aminoacids" aria-selected="false">Amino Acids</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" id="organisms-tab" data-toggle="tab" href="#organisms" role="tab" aria-controls="organisms" aria-selected="false">Organisms</a>
+			    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#organisms" role="tab" aria-controls="organisms" aria-selected="false">Organisms</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" id="kinases-tab" data-toggle="tab" href="#kinases" role="tab" aria-controls="kinases" aria-selected="false">Kinases</a>
+			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#kinases" role="tab" aria-controls="kinases" aria-selected="false">Kinases</a>
 			  </li>
 			</ul>
 			<div class="tab-content tabforms" id="myTabContent">

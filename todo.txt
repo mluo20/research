@@ -1,0 +1,4 @@
+Add an edit function
+make the site load faster
+use AJAX
+relocate the site
